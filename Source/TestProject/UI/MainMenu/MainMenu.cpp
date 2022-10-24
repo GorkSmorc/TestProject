@@ -50,9 +50,9 @@ void UMainMenu::OnPlay()
 	const FString LastWonLevel = Save->GetLastWonLevel();
 	for(size_t i = 0; i < OutRows.Num(); i++)
 	{
-		if(OutRows[i] && OutRows[i]->Level)
+		if(OutRows[i])
 		{
-			if(OutRows[i]->Level->GetName() == LastWonLevel)
+			if(OutRows[i]->Level.GetAssetName() == LastWonLevel)
 			{
 				if(OutRows.IsValidIndex(i+1))
 				{
