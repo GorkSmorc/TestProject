@@ -23,6 +23,11 @@ void UInventoryManager::LoadInventory()
 		OnInventoryLoaded.Broadcast();
 		bIsInventoryLoaded = true;
 	}
+	else
+	{
+		Inventory.Empty();
+		Weapons.Empty();
+	}
 }
 
 void UInventoryManager::SaveInventory(bool bIsWin)

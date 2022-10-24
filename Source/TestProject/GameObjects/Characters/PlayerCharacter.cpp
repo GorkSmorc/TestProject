@@ -210,7 +210,6 @@ float APlayerCharacter::InternalTakePointDamage(float Damage, FPointDamageEvent 
 		if(CastedPlayerState->GetHealth() <= 0)
 		{
 			Death(DamageCauser);
-			UE_LOG(LogTemp,Warning,TEXT("~~~DEAD"))
 			OnPlayerDead.ExecuteIfBound();
 		}
 
