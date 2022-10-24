@@ -132,7 +132,7 @@ void UInventoryManager::BeginPlay()
 	if(ATestProjectGameMode* GameMode = GetWorld()->GetAuthGameMode<ATestProjectGameMode>())
 	{
 		GameMode->OnGameEnded.AddUObject(this, &ThisClass::SaveInventory);
-		GameMode->OnGameRestarted.AddUObject(this, &ThisClass::LoadInventory);
+		GameMode->OnGameRestarted.AddUniqueDynamic(this, &ThisClass::LoadInventory);
 	}
 
 	LoadInventory();

@@ -30,7 +30,7 @@ void ATestProjectPlayerState::BeginPlay()
 
 	if(ATestProjectGameMode* GameMode = GetWorld()->GetAuthGameMode<ATestProjectGameMode>())
 	{
-		GameMode->OnGameRestarted.AddUObject(this, &ThisClass::ResetLevelProgress);
+		GameMode->OnGameRestarted.AddUniqueDynamic(this, &ThisClass::ResetLevelProgress);
 	}	
 }
 

@@ -12,6 +12,8 @@
  */
 
 DECLARE_DELEGATE(FOnPlayerDead);
+DECLARE_DELEGATE(FOnPlayerTookDamage);
+DECLARE_DELEGATE(FRequestToExit);
 
 UCLASS()
 class TESTPROJECT_API APlayerCharacter : public ATestProjectCharacter
@@ -31,6 +33,8 @@ public:
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
 	FOnPlayerDead OnPlayerDead;
+	FOnPlayerTookDamage OnPlayerTookDamage;
+	FRequestToExit RequestToExit;
 
 protected:
 
@@ -66,6 +70,9 @@ protected:
 
 	UFUNCTION()
 	void OnPreviousWeapon();
+
+	UFUNCTION()
+	void RequestToExitToMainMenu();
 
 	UFUNCTION()
 	void SwitchWeapon(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);

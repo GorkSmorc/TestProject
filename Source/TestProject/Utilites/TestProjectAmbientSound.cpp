@@ -24,7 +24,7 @@ void ATestProjectAmbientSound::BeginPlay()
 	if(ATestProjectGameMode* GameMode = GetWorld()->GetAuthGameMode<ATestProjectGameMode>())
 	{
 		GameMode->OnGameEnded.AddUObject(this, &ThisClass::SwitchSound);
-		GameMode->OnGameRestarted.AddUObject(this, &ThisClass::ReturnSound);
+		GameMode->OnGameRestarted.AddUniqueDynamic(this, &ThisClass::ReturnSound);
 	}
 
 	GetAudioComponent()->bIsUISound = true;

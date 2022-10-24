@@ -22,10 +22,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	UHealthBar* GetHealthBar() const { return HealthBar; }
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayGetHitAnim();
+
 	UFUNCTION(BlueprintCallable)
 	UAmmoWidget* GetAmmoWidget() const { return Ammo; }
 	
 protected:
+
+	virtual void NativeConstruct() override;
 	
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(BindWidget))
 	UHealthBar* HealthBar = nullptr;

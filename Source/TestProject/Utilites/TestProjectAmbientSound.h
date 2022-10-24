@@ -13,8 +13,6 @@ UCLASS()
 class TESTPROJECT_API ATestProjectAmbientSound : public AAmbientSound
 {
 	GENERATED_BODY()
-
-	void ReturnSound();
 	
 	virtual void BeginPlay() override;
 
@@ -33,6 +31,9 @@ private:
 		
 	UFUNCTION()
 	void SwitchSound(bool bIsWin);
+	
+	UFUNCTION()
+	void ReturnSound();
 
 	UPROPERTY()
 	USoundBase* AmbientSound = nullptr;

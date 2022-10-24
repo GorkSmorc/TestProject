@@ -33,6 +33,9 @@ public:
 
 protected:
 
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+	void CreateRequestToExitWidget();
+
 	UFUNCTION()
 	void ShowFinishScreen(bool bIsWin) const;
 

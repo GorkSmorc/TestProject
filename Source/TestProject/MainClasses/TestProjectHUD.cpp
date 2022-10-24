@@ -4,6 +4,7 @@
 #include "CanvasItem.h"
 #include "TestProjectGameMode.h"
 #include "Blueprint/UserWidget.h"
+#include "GameObjects/Characters/PlayerCharacter.h"
 #include "UI/FinishGameScreen.h"
 #include "UI/Inventory/Inventory.h"
 #include "UI/PlayerHUD.h"
@@ -34,9 +35,11 @@ void ATestProjectHUD::CreatePlayerHUD()
 		if(!GameMode->OnGameEnded.IsBoundToObject(this))
 			GameMode->OnGameEnded.AddUObject(this, &ThisClass::ShowFinishScreen);
 
-		if(!GameMode->OnGameRestarted.IsBoundToObject(this))
-			GameMode->OnGameRestarted.AddUObject(this, &ThisClass::CreatePlayerHUD);
+		if(!GameMode->OnGameRestarted.IsAlreadyBound(this, &ThisClass::CreatePlayerHUD))
+			GameMode->OnGameRestarted.AddUniqueDynamic(this, &ThisClass::CreatePlayerHUD);
 	}
+
+	PlayerOwner->GetPawn<APlayerCharacter>()->RequestToExit.BindUObject(this, &ThisClass::CreateRequestToExitWidget);
 }
 
 void ATestProjectHUD::ShowHideInventory()

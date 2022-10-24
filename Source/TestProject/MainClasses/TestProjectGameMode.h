@@ -8,7 +8,7 @@
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnGameEnded, bool bIsWin);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnBotKilled, int32 BotsLeft)
-DECLARE_MULTICAST_DELEGATE(FOnGameRestarted)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameRestarted);
 
 UCLASS(minimalapi)
 class ATestProjectGameMode : public AGameModeBase
@@ -32,6 +32,8 @@ public:
 
 	FOnGameEnded OnGameEnded;
 	FOnBotKilled OnBotCountChanged;
+
+	UPROPERTY(BlueprintAssignable)
 	FOnGameRestarted OnGameRestarted;
 
 protected:

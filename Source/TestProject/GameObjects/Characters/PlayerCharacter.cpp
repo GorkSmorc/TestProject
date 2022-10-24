@@ -117,6 +117,8 @@ void APlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerCharacter::OnInteractClicked);
 	//Bind help button
 	PlayerInputComponent->BindAction("Help", IE_Pressed, this, &APlayerCharacter::OnHelpClicked);
+	//Bind exit to main menu button
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::RequestToExitToMainMenu);
 	
 	// Bind movement events
 	PlayerInputComponent->BindAxis("MoveForward", this, &APlayerCharacter::MoveForward);
@@ -211,6 +213,8 @@ float APlayerCharacter::InternalTakePointDamage(float Damage, FPointDamageEvent 
 			UE_LOG(LogTemp,Warning,TEXT("~~~DEAD"))
 			OnPlayerDead.ExecuteIfBound();
 		}
+
+		OnPlayerTookDamage.ExecuteIfBound();
 	}
 	
 	return Damage;
@@ -316,6 +320,11 @@ void APlayerCharacter::OnPreviousWeapon()
 	bSwitchingWeapon = true;
 	Mesh1P->GetAnimInstance()->OnPlayMontageNotifyBegin.AddUniqueDynamic(this,&ThisClass::SwitchWeapon);
 	Mesh1P->GetAnimInstance()->Montage_Play(Weapon->GetWeaponStats().HolsterAnim);
+}
+
+void APlayerCharacter::RequestToExitToMainMenu()
+{
+	RequestToExit.ExecuteIfBound();
 }
 
 void APlayerCharacter::SwitchWeapon(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)

@@ -21,5 +21,15 @@ void UHealthBar::NativeConstruct()
 void UHealthBar::UpdateHealth(int32 CurrentHealth, int32 MaxHealth)
 {
 	HealthText->SetText(FText::AsNumber(CurrentHealth));
+	if(CurrentHealth > MaxHealth)
+	{
+		HealthText->SetColorAndOpacity(FSlateColor(FLinearColor::Yellow));
+	}
+	else
+	{
+		HealthText->SetColorAndOpacity(FSlateColor(FLinearColor::White));
+	}
+	
+	
 	HealthBar->SetPercent(static_cast<float>(CurrentHealth) / MaxHealth);
 }
