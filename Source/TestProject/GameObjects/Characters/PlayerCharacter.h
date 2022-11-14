@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameObjects/Characters/TestProjectCharacter.h"
-#include "Utilites/WeaponInventoryStruct.h"
+#include "Utilities/WeaponInventoryStruct.h"
 #include "PlayerCharacter.generated.h"
 
 /**

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameObjects/Items/PickableItem.h"
-#include "Utilites/UseInterface.h"
+#include "Utilities/UseInterface.h"
 #include "UsablePickableItem.generated.h"
 
 /**

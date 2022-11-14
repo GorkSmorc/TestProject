@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Utilites/TestProjectAmbientSound.h"
+#include "Utilities/TestProjectAmbientSound.h"
 
 #include "Components/AudioComponent.h"
 #include "Engine/AssetManager.h"

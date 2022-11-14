@@ -8,7 +8,7 @@
 #include "Engine/DataTable.h"
 #include "Kismet/GameplayStatics.h"
 #include "MainClasses/TestProjectGameMode.h"
-#include "Utilites/LevelsListDataTableStruct.h"
+#include "Utilities/LevelsListDataTableStruct.h"
 
 void UFinishGameScreen::Init(bool bIsWin)
 {

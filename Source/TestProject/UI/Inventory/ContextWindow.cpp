@@ -7,7 +7,7 @@
 #include "Components/Button.h"
 #include "Components/InventoryManager.h"
 #include "MainClasses/TestProjectPlayerState.h"
-#include "Utilites/UseInterface.h"
+#include "Utilities/UseInterface.h"
 
 void UContextWindow::NativeConstruct()
 {

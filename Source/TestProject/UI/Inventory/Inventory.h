@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "Utilites/InventoryStruct.h"
+#include "Utilities/InventoryStruct.h"
 #include "Inventory.generated.h"
 
 class UInventorySlot;

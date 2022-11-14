@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
-#include "Utilites/InventoryStruct.h"
-#include "Utilites/WeaponInventoryStruct.h"
+#include "Utilities/InventoryStruct.h"
+#include "Utilities/WeaponInventoryStruct.h"
 #include "ProgressSave.generated.h"
 
 /**

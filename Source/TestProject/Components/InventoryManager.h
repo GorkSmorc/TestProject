@@ -5,8 +5,8 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Components/TreeView.h"
-#include "Utilites/InventoryStruct.h"
-#include "Utilites/WeaponInventoryStruct.h"
+#include "Utilities/InventoryStruct.h"
+#include "Utilities/WeaponInventoryStruct.h"
 #include "InventoryManager.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInventoryChanged,int32, ChangedSlotIndex, FInventoryItem, NewItem);

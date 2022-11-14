@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UI/Inventory/Inventory.h"
-#include "Utilites/InventoryStruct.h"
+#include "Utilities/InventoryStruct.h"
 #include "InventorySlot.generated.h"
 
 /**

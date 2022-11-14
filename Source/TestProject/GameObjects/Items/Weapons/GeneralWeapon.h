@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameObjects/Items/DefaultItem.h"
-#include "Utilites/WeaponStats.h"
+#include "Utilities/WeaponStats.h"
 #include "GeneralWeapon.generated.h"
 
 DECLARE_DELEGATE(FOnWeaponFired)

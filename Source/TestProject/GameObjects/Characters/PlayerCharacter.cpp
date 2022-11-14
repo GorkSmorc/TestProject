@@ -16,8 +16,8 @@
 #include "MainClasses/TestProjectHUD.h"
 #include "MainClasses/TestProjectPlayerState.h"
 #include "UI/Inventory/Inventory.h"
-#include "Utilites/InventoryStruct.h"
-#include "Utilites/UseInterface.h"
+#include "Utilities/InventoryStruct.h"
+#include "Utilities/UseInterface.h"
 
 APlayerCharacter::APlayerCharacter() : Super()
 {

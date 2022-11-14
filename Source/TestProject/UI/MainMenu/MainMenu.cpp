@@ -7,8 +7,8 @@
 #include "Engine/DataTable.h"
 #include "Kismet/GameplayStatics.h"
 #include "Saves/ProgressSave.h"
-#include "Utilites/LevelsListDataTableStruct.h"
-#include "Utilites/SoundButton.h"
+#include "Utilities/LevelsListDataTableStruct.h"
+#include "Utilities/SoundButton.h"
 
 void UMainMenu::NativeConstruct()
 {

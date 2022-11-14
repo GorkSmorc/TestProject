@@ -7,7 +7,7 @@
 #include "Components/Slider.h"
 #include "Components/TextBlock.h"
 #include "MainClasses/TestProjectGameInstance.h"
-#include "Utilites/SoundButton.h"
+#include "Utilities/SoundButton.h"
 
 void USettingsWindow::NativeConstruct()
 {
