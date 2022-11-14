@@ -19,13 +19,13 @@ Welcome to the my demo project! <br />To run it you need:
   
 # Architecture
 
-  All C++ code is in "/Source/TestProject" folder (or "C++ classes/TestProject", if you are looking from editor)
-  · The "Cheats" folder contains a custom Cheat manager and a widget for cheats.
-  · The "Components" folder contains a InventoryManager's class. This component exist in the PlayerState.
-  · The "GameObjects/Characters" folder contains all Character's classes in project. TestProjectCharacter is general character's class (parent), PlayerCharacter is character's class for player, AICharacter is character's class for AI
-  · The "GameObjects/Items" folder contains all Item's classes in project. DefaultItem is general item's class, PickableItem is general class for pickable items (child of DefaultItem)
-  · The "GameObjects/Items/Weapons" folder contains a general class for weapons that the character is holding (child of DefaultItem).
-  · The "MainClasses" folder contains all main classes such as GameMode, HUD, PlayerController, etc
-  · The "MainClasses" folder contains classes for Save files. SettingsSave is save for settings, ProgressSave is save for saving game progress.
-  · The "UI" folder contains all widget classes. 
-  · The "Utilities" folder contains all technical classes and files for structures. Also here is UseInterface. It is interface for all usable items and objects.
+  All C++ code is in "/Source/TestProject" folder (or "C++ classes/TestProject", if you are looking from editor) <br />
+  · The "Cheats" folder contains a custom Cheat manager and a widget for cheats. <br />
+  · The "Components" folder contains a InventoryManager's class. This component exist in the PlayerState. <br />
+  · The "GameObjects/Characters" folder contains all Character's classes in project. TestProjectCharacter is general character's class (parent), PlayerCharacter is character's class for player, AICharacter is character's class for AI <br />
+  · The "GameObjects/Items" folder contains all Item's classes in project. DefaultItem is general item's class, PickableItem is general class for pickable items (child of DefaultItem) <br />
+  · The "GameObjects/Items/Weapons" folder contains a general class for weapons that the character is holding (child of DefaultItem). <br />
+  · The "MainClasses" folder contains all main classes such as GameMode, HUD, PlayerController, etc <br />
+  · The "MainClasses" folder contains classes for Save files. SettingsSave is save for settings, ProgressSave is save for saving game progress. <br />
+  · The "UI" folder contains all widget classes. <br />
+  · The "Utilities" folder contains all technical classes and files for structures. Also here is UseInterface. It is interface for all usable items and objects. <br />
