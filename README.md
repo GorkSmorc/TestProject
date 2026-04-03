@@ -2,7 +2,8 @@
 
 Welcome to the my demo project! <br />To run it you need:
 
-  1. Install Unreal Engine 4.27 and Visual Studio 2019 <br />
+  ~~1. Install Unreal Engine 4.27 and Visual Studio 2019 <br />~~
+  1. Install Unreal Engine 5.7 and Visual Studio 2022 <br />
   2. Run the TestProject.uproject file and build the project <br />
 		2.1 Optional: To read the source code, you need to right-click on TestProject.uproject and select "Generate Visual Sturio project files". After that run                               TestProject.sln file. Source code will be opened by Visual Studio. <br />
   3. When Unreal Editor builds, MainMenu map will open automaticly (if it willn't, open the map MainMenu by path "/FirstPersonCPP/Maps/MainMenu" in Editor) <br />
