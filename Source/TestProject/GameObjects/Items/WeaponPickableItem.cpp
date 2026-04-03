@@ -3,6 +3,8 @@
 
 #include "GameObjects/Items/WeaponPickableItem.h"
 
+#include <Kismet/GameplayStatics.h>
+
 #include "Components/InventoryManager.h"
 #include "GameObjects/Items/Weapons/GeneralWeapon.h"
 #include "GameObjects/Characters/TestProjectCharacter.h"
@@ -14,6 +16,7 @@ void AWeaponPickableItem::OnPickedUp(ATestProjectCharacter* OverlappedCharacter)
 	{
 		if(OverlappedCharacter->GetPlayerState<ATestProjectPlayerState>()->GetInventoryManager()->AddWeapon(ItemClass))
 		{
+			UGameplayStatics::PlaySound2D(this, Sound, 0.7f);
 			Destroy();
 		}
 	}

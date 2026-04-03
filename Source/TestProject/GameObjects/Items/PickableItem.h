@@ -40,6 +40,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly,EditAnywhere)
 	UTexture2D* Image = nullptr;
 	
+	UPROPERTY(BlueprintReadOnly,EditAnywhere)
+	USoundBase* Sound = nullptr;
+	
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* StaticMeshComponent = nullptr;
 

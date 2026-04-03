@@ -3,6 +3,8 @@
 
 #include "GameObjects/Items/PickableItem.h"
 
+#include <Kismet/GameplayStatics.h>
+
 #include "Components/InventoryManager.h"
 #include "GameObjects/Characters/TestProjectCharacter.h"
 #include "MainClasses/TestProjectPlayerState.h"
@@ -38,6 +40,7 @@ void APickableItem::OnPickedUp(ATestProjectCharacter* OverlappedCharacter)
 	{
 		if(OverlappedCharacter->GetPlayerState<ATestProjectPlayerState>()->GetInventoryManager()->AddItem(GetClass(),Count))
 		{
+			UGameplayStatics::PlaySound2D(this, Sound, 0.7f);
 			Destroy();
 		}
 	}
