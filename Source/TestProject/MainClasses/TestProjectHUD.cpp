@@ -1,12 +1,10 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "TestProjectHUD.h"
-#include "CanvasItem.h"
 #include "TestProjectGameMode.h"
 #include "Blueprint/UserWidget.h"
 #include "GameObjects/Characters/PlayerCharacter.h"
 #include "UI/FinishGameScreen.h"
-#include "UI/Inventory/Inventory.h"
 #include "UI/PlayerHUD.h"
 
 
@@ -40,26 +38,20 @@ void ATestProjectHUD::CreatePlayerHUD()
 	}
 
 	PlayerOwner->GetPawn<APlayerCharacter>()->RequestToExit.BindUObject(this, &ThisClass::CreateRequestToExitWidget);
+	PlayerOwner->SetShowMouseCursor(false);
+	PlayerOwner->SetInputMode(FInputModeGameOnly());
 }
 
-void ATestProjectHUD::ShowHideInventory()
+bool ATestProjectHUD::ToggleInventory() const
 {
-	if(InventoryClass != nullptr)
-	{
-		if(!Inventory)
-		{
-			Inventory = CreateWidget<UInventory>(PlayerOwner,InventoryClass);
-		}
+	check(PlayerHUD)
+	return PlayerHUD->ToggleInventory();
+}
 
-		if(!Inventory->IsInViewport())
-		{
-			Inventory->AddToViewport();
-		}
-		else
-		{
-			Inventory->RemoveFromParent();
-		}
-	}
+bool ATestProjectHUD::ToggleHelp() const
+{
+	check(PlayerHUD)
+	return PlayerHUD->ToggleHelp();
 }
 
 void ATestProjectHUD::ShowFinishScreen(bool bIsWin) const
@@ -80,11 +72,4 @@ void ATestProjectHUD::DestroyHUD(AActor* DestroyedActor)
 {
 	PlayerHUD->RemoveFromParent();
 	PlayerHUD = nullptr;
-
-	if(Inventory && Inventory->IsInViewport())
-	{
-		Inventory->RemoveFromParent();
-	}
-
-	Inventory = nullptr;
 }

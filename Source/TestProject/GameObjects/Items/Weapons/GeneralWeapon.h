@@ -80,6 +80,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Mesh)
 	UParticleSystemComponent* Particle = nullptr;
 	
+	UPROPERTY(EditDefaultsOnly, Category = Effects)
+	UCameraShakeSourceComponent* CameraShakeSourceComponent;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Gameplay)
 	FWeaponStats WeaponStats;
 	
@@ -100,6 +103,14 @@ public:
 	
 	UPROPERTY(BlueprintAssignable)
 	FOnWeaponReloaded OnWeaponReloaded;
+	
+//Camera Shake
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<UCameraShakeBase> ShootCameraShakeClass;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<UCameraShakeBase> ShootCameraShakeCrouchClass;
 	
 private:
 

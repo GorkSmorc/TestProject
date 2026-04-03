@@ -55,7 +55,7 @@ private:
 	float MouseSensitivity = 1.f;
 
 	UPROPERTY()
-	float SoundsVolume = 1.f;
+	float SoundsVolume = 0.5f;
 
 	UPROPERTY()
 	class USettingsSave* SettingsSave = nullptr;

@@ -37,7 +37,7 @@ private:
 	void UpdateAmmo(int32 Ammo) const;
 
 	UFUNCTION()
-	void UpdateInventoryAmmo(int32 UpdatedSlotIndex, FInventoryItem NewItem);
+	void UpdateInventoryAmmo(int32 UpdatedSlotIndex, const FInventoryItem& NewItem);
 
 	UPROPERTY()
 	AGeneralWeapon* Weapon = nullptr;

@@ -42,12 +42,17 @@ void ATestProjectAmbientSound::SwitchSound(bool bIsWin)
 	TSoftObjectPtr<USoundBase> SoundToLoad = bIsWin ? WinSound : LoseSound;
 	
 	FStreamableManager& StreamableManager = UAssetManager::Get().GetStreamableManager();
-	StreamableManager.RequestAsyncLoad(SoundToLoad.ToSoftObjectPath(), FStreamableDelegate::CreateWeakLambda(this,[this,SoundToLoad]() 
+	StreamableManager.RequestAsyncLoad(SoundToLoad.ToSoftObjectPath(), FStreamableDelegate::CreateWeakLambda(this,[Self = MakeWeakObjectPtr(this), SoundToLoad]() 
 	{
+		if (!Self.IsValid())
+		{
+			return;
+		}
+			
 		if(USoundBase* Sound = SoundToLoad.Get())
 		{
-			GetAudioComponent()->Sound = Sound;
-			GetAudioComponent()->FadeIn(1.f);
+			Self->GetAudioComponent()->Sound = Sound;
+			Self->GetAudioComponent()->FadeIn(1.f);
 		}
 	}));
 	

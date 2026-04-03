@@ -25,7 +25,7 @@ public:
 	UTexture2D* GetImage() const { return Image; }
 		
 	UPROPERTY(EditAnywhere)
-	float RotateSpeed = 1.f;
+	float RotateSpeed = 50.f;
 	
 protected:
 	// Called when the game starts or when spawned

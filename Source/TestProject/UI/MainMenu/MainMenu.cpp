@@ -34,6 +34,7 @@ void UMainMenu::OnPlay()
 	}
 
 	GetOwningPlayer()->SetInputMode(FInputModeGameOnly());
+	GetOwningPlayer()->SetShowMouseCursor(false);
 
 	TArray<FLevelsListDataTableStruct*> OutRows;
 	Levels->GetAllRows<FLevelsListDataTableStruct>("",OutRows);

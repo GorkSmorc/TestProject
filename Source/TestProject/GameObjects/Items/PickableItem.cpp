@@ -58,6 +58,8 @@ void APickableItem::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if(StaticMeshComponent)
-		StaticMeshComponent->AddWorldRotation(FRotator(0,RotateSpeed,0));
+	{
+		StaticMeshComponent->AddWorldRotation(FRotator(0,RotateSpeed * DeltaTime,0));
+	}
 }
 

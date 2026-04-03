@@ -22,17 +22,16 @@ public:
 	UFUNCTION()
 	void CreatePlayerHUD();
 	
-	UPlayerHUD* GetPlayerHUD() const { return PlayerHUD; }
-	UInventory* GetInventory() const { return Inventory; }
+	TObjectPtr<UPlayerHUD> GetPlayerHUD() const { return PlayerHUD; }
 
 	UFUNCTION(BlueprintCallable)
-	void ShowHideInventory();
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void ShowHideHelp();
-
+	bool ToggleInventory() const;
+	
+	UFUNCTION(BlueprintCallable)
+	bool ToggleHelp() const;
+	
 protected:
-
+		
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void CreateRequestToExitWidget();
 
@@ -44,18 +43,12 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> PlayerHUDClass;
-
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<UUserWidget> InventoryClass;
-
+	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> FinishWindowClass;
 
 	UPROPERTY(BlueprintReadOnly)
-	UPlayerHUD* PlayerHUD = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UInventory* Inventory = nullptr;
-	
+	TObjectPtr<UPlayerHUD> PlayerHUD = nullptr;
+		
 };
 

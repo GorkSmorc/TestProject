@@ -2,17 +2,15 @@
 
 #include "TestProjectGameMode.h"
 #include "TestProjectHUD.h"
-#include "Components/InventoryManager.h"
 #include "Engine/TargetPoint.h"
 #include "GameFramework/PlayerStart.h"
 #include "GameObjects/Characters/AICharacter.h"
 #include "GameObjects/Characters/PlayerCharacter.h"
-#include "GameObjects/Characters/TestProjectCharacter.h"
 #include "GameObjects/Items/ItemSpawner.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 
-ATestProjectGameMode::ATestProjectGameMode() : Super()
+ATestProjectGameMode::ATestProjectGameMode()
 {
 	// set default pawn class to our Blueprinted character
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/FirstPersonCPP/Blueprints/BP_Player"));
@@ -21,6 +19,7 @@ ATestProjectGameMode::ATestProjectGameMode() : Super()
 	// use our custom HUD class
 	HUDClass = ATestProjectHUD::StaticClass();
 }
+
 
 void ATestProjectGameMode::StartGame()
 {
@@ -40,7 +39,7 @@ void ATestProjectGameMode::StartGame()
 		AAICharacter* Bot = GetWorld()->SpawnActor<AAICharacter>(BotClass,Point->GetActorTransform(),ActorSpawnParameters);
 		if(Bot)
 		{
-			Bot->OnBotDead.BindUObject(this, &ThisClass::OnBotRipped);
+			Bot->OnBotDead.BindUObject(this, &ThisClass::OnBotKilled);
 			Bots.Add(Bot);
 		}
 		else
@@ -53,7 +52,7 @@ void ATestProjectGameMode::StartGame()
 	
 }
 
-void ATestProjectGameMode::OnBotRipped(AActor* Bot)
+void ATestProjectGameMode::OnBotKilled(AActor* Bot)
 {
 	BotKilled++;
 	
@@ -79,7 +78,7 @@ void ATestProjectGameMode::OnPlayerSpawned(APlayerCharacter* Character)
 void ATestProjectGameMode::ResetGame()
 {
 	//Kill lived bots and bot's bodyes
-	for(AActor* Bot : Bots)
+	for(const TWeakObjectPtr<AActor> Bot : Bots)
 	{
 		Bot->Destroy();
 	}

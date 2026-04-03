@@ -45,7 +45,7 @@ protected:
 	UFUNCTION()
 	void ResetLevelProgress();
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly,EditAnywhere)
 	UInventoryManager* InventoryManager;
 
 	UPROPERTY(EditDefaultsOnly, Category=Health)

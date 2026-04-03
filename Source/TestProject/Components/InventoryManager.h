@@ -9,7 +9,7 @@
 #include "Utilities/WeaponInventoryStruct.h"
 #include "InventoryManager.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInventoryChanged,int32, ChangedSlotIndex, FInventoryItem, NewItem);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInventoryChanged,int32, ChangedSlotIndex,const FInventoryItem&, NewItem);
 DECLARE_MULTICAST_DELEGATE(FOnInventoryLoaded)
 
 UCLASS(meta=(BlueprintSpawnableComponent))
@@ -68,13 +68,13 @@ public:
 	int32 GetItemCount(TSubclassOf<ADefaultItem> ItemClass);
 
 	bool bIsInventoryLoaded = false;
-
+	
+	UPROPERTY(EditDefaultsOnly)
+	int32 MaxItems = 25;
+	
 protected:
 
 	virtual void BeginPlay() override;
-
-	UPROPERTY(EditDefaultsOnly)
-	int32 MaxItems = 25;
 
 	UPROPERTY(BlueprintReadOnly,Category=Inventory)
 	TArray<FInventoryItem> Inventory;

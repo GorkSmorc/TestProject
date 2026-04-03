@@ -3,9 +3,12 @@
 
 #include "GeneralWeapon.h"
 
+#include <Camera/CameraShakeSourceComponent.h>
+
 #include "Kismet/GameplayStatics.h"
 
 #include "Components/ArrowComponent.h"
+#include "GameObjects/Characters/PlayerCharacter.h"
 #include "MainClasses/TestProjectGameInstance.h"
 #include "Particles/ParticleSystemComponent.h"
 
@@ -20,6 +23,8 @@ AGeneralWeapon::AGeneralWeapon()
 	FP_Gun->CastShadow = false;
 	FP_Gun->SetupAttachment(RootComponent);
 	
+	CameraShakeSourceComponent = CreateDefaultSubobject<UCameraShakeSourceComponent>(TEXT("ShootShake"));
+	CameraShakeSourceComponent->SetupAttachment(FP_Gun);
 
 	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
 	Arrow->SetupAttachment(FP_Gun);
@@ -102,23 +107,35 @@ void AGeneralWeapon::CreateTrace()
 	
 	if(UKismetSystemLibrary::LineTraceSingle(this,Start,End,TraceTypeQuery3,false,ActorsToIgnore,EDrawDebugTrace::None,OutHit,true))
 	{
-		if (OutHit.Actor != nullptr) 
+		if (OutHit.GetActor() != nullptr) 
 		{
 			const int32 Damage = WeaponStats.Damage + FMath::RandRange(-5,5);
-			UGameplayStatics::ApplyPointDamage(OutHit.Actor.Get(),Damage,OutHit.TraceStart,OutHit,GetAttachParentActor()->GetInstigatorController(),GetAttachParentActor(),UDamageType::StaticClass());
+			UGameplayStatics::ApplyPointDamage(OutHit.GetActor(),Damage,OutHit.TraceStart,OutHit,GetAttachParentActor()->GetInstigatorController(),GetAttachParentActor(),UDamageType::StaticClass());
 			CreateHitDecal(OutHit);
 		}
 	}
 
-	if(APawn* CastedPawn = Cast<APawn>(GetAttachParentActor()))
+	float LocalMaxDispersion = WeaponStats.MaxDispersion;
+	if(ACharacter* CastedPawn = Cast<ACharacter>(GetAttachParentActor()))
 	{
 		MakeNoise(1,CastedPawn,GetActorLocation(),0,"Shoot");
+		
+		if (CastedPawn->IsPlayerControlled())
+		{
+			CameraShakeSourceComponent->StartCameraShake(CastedPawn->IsCrouched() ? ShootCameraShakeCrouchClass : ShootCameraShakeClass);
+		}
+		
+		if (CastedPawn->IsCrouched())
+		{
+			LocalMaxDispersion /= 2;
+		}
 	}
 	
 	Dispersion += WeaponStats.DispersionPerShot;
-	if(Dispersion > WeaponStats.MaxDispersion)
+	
+	if(Dispersion > LocalMaxDispersion)
 	{
-		Dispersion = WeaponStats.MaxDispersion;
+		Dispersion = LocalMaxDispersion;
 	}
 
 	if(!bIsUnlimitedAmmoEnabled)
@@ -133,6 +150,8 @@ void AGeneralWeapon::CreateTrace()
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, WeaponStats.FireSound, GetActorLocation(),GetGameInstance<UTestProjectGameInstance>()->GetSoundVolume());
 	}
+	
+	
 }
 
 void AGeneralWeapon::OnReloadEnded(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)

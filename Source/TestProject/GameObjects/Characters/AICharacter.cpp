@@ -3,14 +3,15 @@
 
 #include "GameObjects/Characters/AICharacter.h"
 
-#include "AIController.h"
+#include <Engine/DamageEvents.h>
+#include <GameFramework/CharacterMovementComponent.h>
+#include <PhysicsEngine/PhysicalAnimationComponent.h>
+
 #include "Components/CapsuleComponent.h"
-#include "Components/SphereComponent.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "GameObjects/Items/Weapons/GeneralWeapon.h"
 #include "Perception/AISense_Damage.h"
 
-AAICharacter::AAICharacter() : Super()
+AAICharacter::AAICharacter()
 {
 	PhysicalAnimationComponent = CreateDefaultSubobject<UPhysicalAnimationComponent>(TEXT("Physical Animation Component"));
 
@@ -53,14 +54,15 @@ void AAICharacter::BeginPlay()
 
 	FPhysicalAnimationData PhysicalAnimationData;
 	PhysicalAnimationData.bIsLocalSimulation = false;
-	PhysicalAnimationData.OrientationStrength = 500.f;
-	PhysicalAnimationData.AngularVelocityStrength = 100.f;
+	PhysicalAnimationData.OrientationStrength = 700.f;
+	PhysicalAnimationData.AngularVelocityStrength = 300.f;
 	PhysicalAnimationData.PositionStrength = 500.f;
-	PhysicalAnimationData.VelocityStrength = 100.f;
+	PhysicalAnimationData.VelocityStrength = 200.f;
 	
-	PhysicalAnimationComponent->ApplyPhysicalAnimationSettingsBelow(TEXT("spine_01"), PhysicalAnimationData, false);
-	GetMesh()->SetAllBodiesBelowSimulatePhysics(BoneForPA,true,false);
-	GetMesh()->SetAllBodiesBelowPhysicsBlendWeight(BoneForPA, 0.f,false,false);
+	PhysicalAnimationComponent->ApplyPhysicalAnimationSettingsBelow(BoneForPA, PhysicalAnimationData, true);
+
+	GetMesh()->SetAllBodiesBelowSimulatePhysics(BoneForPA,true,true);
+	GetMesh()->SetAllBodiesBelowPhysicsBlendWeight(BoneForPA, 0.f,false,true);
 
 	SpawnRandomWeapon();
 }
@@ -76,11 +78,13 @@ void AAICharacter::Death()
 	}
 	
 	StopAllPATimelines();
-	GetMesh()->SetAllBodiesBelowPhysicsBlendWeight(BoneForPA,1.f,false,false);
-
-	PhysicalAnimationComponent->ApplyPhysicalAnimationSettingsBelow("pelvis", FPhysicalAnimationData());
+	PhysicalAnimationComponent->ApplyPhysicalAnimationSettingsBelow(BoneForPA, FPhysicalAnimationData(), false);
+	GetMesh()->SetAllBodiesBelowSimulatePhysics(BoneForPA,false,true);
+	
 	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCharacterMovement()->SetMovementMode(MOVE_None);
 
 	OnBotDead.ExecuteIfBound(this);
 }
@@ -105,8 +109,11 @@ void AAICharacter::Reloading()
 	Weapon->Reloading(Weapon->GetWeaponStats().MaxAmmo);
 }
 
-void AAICharacter::Destroyed()
+void AAICharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	Super::EndPlay(EndPlayReason);
+	
+	OnBotDead.Unbind();
 	if(GetController())
 	{
 		GetController()->Destroy();
@@ -116,6 +123,4 @@ void AAICharacter::Destroyed()
 	{
 		Weapon->Destroy();
 	}
-	
-	Super::Destroyed();
 }

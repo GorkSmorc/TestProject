@@ -6,6 +6,7 @@
 #include "GameObjects/Characters/TestProjectCharacter.h"
 #include "AICharacter.generated.h"
 
+class UPhysicalAnimationComponent;
 /**
  * 
  */
@@ -27,7 +28,7 @@ protected:
 	virtual void BeginPlay() override;		
 	virtual float InternalTakePointDamage(float Damage, struct FPointDamageEvent const& PointDamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	virtual void Reloading() override;
-	virtual void Destroyed() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void MeshHit();

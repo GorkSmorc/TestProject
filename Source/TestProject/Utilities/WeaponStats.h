@@ -83,10 +83,12 @@ struct FWeaponStats
 		CharacterShootAnim(nullptr),
 		CharacterShootEmptyAnim(nullptr),
 		WeaponReloadAnimFullEmpty(nullptr),
-		WeaponReloadAnim(nullptr),
+		CharacterReloadAnimFullEmpty(nullptr),
+		WeaponReloadAnim(nullptr), 
+		CharacterReloadAnim(nullptr),
 		HolsterAnim(nullptr),
 		UnHolsterAnim(nullptr)
-	{}
-	
+	{
+	}
 };
 

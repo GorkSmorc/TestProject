@@ -34,5 +34,5 @@ private:
 	float MouseSensitivity = 1.f;
 
 	UPROPERTY()
-	float SoundVolume = 1.f;
+	float SoundVolume = 0.5f;
 };

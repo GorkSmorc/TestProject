@@ -39,11 +39,11 @@ public:
 protected:
 
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 	virtual void AddControllerYawInput(float Val) override;
 	virtual void AddControllerPitchInput(float Val) override;;
 	virtual void PossessedBy(AController* NewController) override;
-	virtual void Destroyed() override;
 
 	virtual void OnFire() override;
 	virtual void Reloading() override;

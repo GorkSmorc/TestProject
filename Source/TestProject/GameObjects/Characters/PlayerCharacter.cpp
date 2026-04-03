@@ -15,7 +15,6 @@
 #include "MainClasses/TestProjectGameMode.h"
 #include "MainClasses/TestProjectHUD.h"
 #include "MainClasses/TestProjectPlayerState.h"
-#include "UI/Inventory/Inventory.h"
 #include "Utilities/InventoryStruct.h"
 #include "Utilities/UseInterface.h"
 
@@ -48,6 +47,17 @@ void APlayerCharacter::BeginPlay()
 	GetWorld()->GetAuthGameMode<ATestProjectGameMode>()->OnPlayerSpawned(this);
 }
 
+void APlayerCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+	if(Weapon)
+	{
+		Weapon->Destroy();
+	}
+	
+	OnPlayerDead.Unbind();
+}
+
 void APlayerCharacter::PossessedBy(AController* NewController) //Equip weapon from loaded inventory
 {
 	Super::PossessedBy(NewController);
@@ -71,16 +81,6 @@ void APlayerCharacter::PossessedBy(AController* NewController) //Equip weapon fr
 		{
 			CastedPlayerState->GetInventoryManager()->OnInventoryLoaded.AddWeakLambda(this, Lambda);
 		}
-	}
-}
-
-void APlayerCharacter::Destroyed()
-{
-	Super::Destroyed();
-
-	if(Weapon)
-	{
-		Weapon->Destroy();
 	}
 }
 
@@ -209,8 +209,8 @@ float APlayerCharacter::InternalTakePointDamage(float Damage, FPointDamageEvent 
 		CastedPlayerState->SetHealth(CastedPlayerState->GetHealth() - Damage);
 		if(CastedPlayerState->GetHealth() <= 0)
 		{
-			Death(DamageCauser);
 			OnPlayerDead.ExecuteIfBound();
+			Death(DamageCauser);
 		}
 
 		OnPlayerTookDamage.ExecuteIfBound();
@@ -221,19 +221,20 @@ float APlayerCharacter::InternalTakePointDamage(float Damage, FPointDamageEvent 
 
 void APlayerCharacter::OnInventoryClicked()
 {
-	if(ATestProjectHUD* HUD = GetController<APlayerController>()->GetHUD<ATestProjectHUD>())
+	APlayerController* PController = GetController<APlayerController>();
+	if (!Controller)
 	{
-		HUD->ShowHideInventory();
-		GetCharacterMovement()->SetMovementMode(HUD->GetInventory()->IsInViewport() ? MOVE_None : MOVE_Walking);
-		bInWidget = HUD->GetInventory()->IsInViewport();
+		return;
+	}
+	
+	if(ATestProjectHUD* HUD = PController->GetHUD<ATestProjectHUD>())
+	{
+		bInWidget = HUD->ToggleInventory();
+		GetCharacterMovement()->SetMovementMode(bInWidget ? MOVE_None : MOVE_Walking);
 		if(bInWidget)
 		{
 			OnStopFire();
 			OnCrouchEnded();
-		}
-		else
-		{
-			GetController<APlayerController>()->SetInputMode(FInputModeGameOnly());
 		}
 		
 	}
@@ -243,7 +244,7 @@ void APlayerCharacter::OnHelpClicked()
 {
 	if(ATestProjectHUD* HUD = GetController<APlayerController>()->GetHUD<ATestProjectHUD>())
 	{
-		HUD->ShowHideHelp();		
+		HUD->ToggleHelp();		
 	}
 }
 
@@ -255,19 +256,11 @@ void APlayerCharacter::OnCrouchStarted()
 	}
 	
 	Crouch();
-	if(Weapon)
-	{
-		Weapon->SetMaxDispersion(Weapon->GetWeaponStats().MaxDispersion / 2);
-	}
 }
 
 void APlayerCharacter::OnCrouchEnded()
 {
 	UnCrouch();
-	if(Weapon)
-	{
-		Weapon->SetMaxDispersion(Weapon->GetWeaponStats().MaxDispersion * 2);
-	}
 }
 
 void APlayerCharacter::Death(AActor* Killer)
@@ -355,9 +348,9 @@ void APlayerCharacter::OnInteractClicked()
 	FHitResult OutHit;
 	if(UKismetSystemLibrary::LineTraceSingle(this,Start,End,TraceTypeQuery1,false,ActorsToIgnore,EDrawDebugTrace::None, OutHit,true))
 	{
-		if(OutHit.Actor->GetClass()->ImplementsInterface(UUseInterface::StaticClass()))
+		if(OutHit.GetActor()->GetClass()->ImplementsInterface(UUseInterface::StaticClass()))
 		{
-			IUseInterface::Execute_Use(OutHit.Actor.Get());
+			IUseInterface::Execute_Use(OutHit.GetActor());
 		}
 	}
 }

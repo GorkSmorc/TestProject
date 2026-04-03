@@ -17,7 +17,7 @@ class ATestProjectGameMode : public AGameModeBase
 
 public:
 	ATestProjectGameMode();
-
+	
 	UFUNCTION(BlueprintCallable)
 	void OnPlayerSpawned(class APlayerCharacter* Character);
 
@@ -38,7 +38,7 @@ public:
 
 protected:
 	
-	void OnBotRipped(AActor* Bot);
+	void OnBotKilled(AActor* Bot);
 
 	UFUNCTION(BlueprintCallable)
 	void EndGame(bool bIsWin);
@@ -57,8 +57,7 @@ private:
 	UPROPERTY()
 	int32 BotKilled = 0;
 	
-	UPROPERTY()
-	TArray<AActor*> Bots;
+	TArray<TWeakObjectPtr<AActor>> Bots;
 };
 
 

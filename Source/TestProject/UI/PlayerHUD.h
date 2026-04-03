@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "PlayerHUD.generated.h"
 
+class UInventory;
 /**
  * 
  */
@@ -28,14 +29,28 @@ public:
 	UFUNCTION(BlueprintCallable)
 	UAmmoWidget* GetAmmoWidget() const { return Ammo; }
 	
+	UFUNCTION(BlueprintCallable)
+	UInventory* GetInventoryWidget() const { return Inventory; }
+	
+	UFUNCTION(BlueprintCallable)
+	bool ToggleInventory();
+	
+	UFUNCTION(BlueprintCallable)
+	bool ToggleHelp();
+
 protected:
 
 	virtual void NativeConstruct() override;
 	
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(BindWidget))
-	UHealthBar* HealthBar = nullptr;
+	TObjectPtr<UHealthBar> HealthBar = nullptr;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(BindWidget))
-	UAmmoWidget* Ammo = nullptr;
+	TObjectPtr<UAmmoWidget> Ammo = nullptr;
 	
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(BindWidget))
+	TObjectPtr<UInventory> Inventory = nullptr;
+	
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta=(BindWidget))
+	TObjectPtr<UUserWidget> Help = nullptr;
 };

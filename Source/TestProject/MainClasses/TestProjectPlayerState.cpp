@@ -5,9 +5,8 @@
 
 #include "TestProjectGameMode.h"
 #include "Components/InventoryManager.h"
-#include "Kismet/GameplayStatics.h"
 
-ATestProjectPlayerState::ATestProjectPlayerState() : Super()
+ATestProjectPlayerState::ATestProjectPlayerState()
 {
 	InventoryManager = CreateDefaultSubobject<UInventoryManager>("InventoryManager");
 }

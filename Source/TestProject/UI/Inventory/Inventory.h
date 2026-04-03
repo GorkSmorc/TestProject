@@ -18,6 +18,9 @@ class TESTPROJECT_API UInventory : public UUserWidget
 
 protected:
 	
+	UFUNCTION()
+	void OnInventoryVisibilityChanged(ESlateVisibility InVisibility);
+	
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
 
@@ -34,7 +37,7 @@ protected:
 	void OnInventorySlotClicked(UInventorySlot* ClickedSlot);
 
 	UFUNCTION()
-	void OnInventoryUpdated(int32 ChangedSlotIndex, FInventoryItem NewItem);
+	void OnInventoryUpdated(int32 ChangedSlotIndex, const FInventoryItem& NewItem);
 	
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 	class UWrapBox* WrapBox = nullptr;
@@ -51,6 +54,6 @@ protected:
 private:
 
 	UPROPERTY()
-	UContextWindow* ContextWindow = nullptr;
+	TObjectPtr<UContextWindow> ContextWindow = nullptr;
 	
 };

@@ -65,7 +65,7 @@ void UAmmoWidget::UpdateAmmo(const int32 Ammo) const
 	AmmoText->SetText(FText::AsNumber(Ammo));
 }
 
-void UAmmoWidget::UpdateInventoryAmmo(int32 UpdatedSlotIndex, FInventoryItem NewItem)
+void UAmmoWidget::UpdateInventoryAmmo(int32 UpdatedSlotIndex, const FInventoryItem& NewItem)
 {
 	if(!Weapon || !NewItem.Item)
 	{

@@ -12,12 +12,12 @@
 
 #include "MainClasses/TestProjectPlayerState.h"
 
+
 void UInventory::NativeConstruct()
 {
 	Super::NativeConstruct();
-	
-	GetOwningPlayer()->SetShowMouseCursor(true);
-	
+	OnVisibilityChanged.AddUniqueDynamic(this,&ThisClass::OnInventoryVisibilityChanged);
+		
 	if(Slots.Num() <= 0)
 	{
 		GenerateSlots();
@@ -27,13 +27,26 @@ void UInventory::NativeConstruct()
 	UpdateSlots();
 }
 
+void UInventory::OnInventoryVisibilityChanged(ESlateVisibility InVisibility)
+{
+	if (IsVisible())
+	{
+		FInputModeGameAndUI InputMode;
+		InputMode.SetWidgetToFocus(GetCachedWidget());
+		
+		GetOwningPlayer()->ClientIgnoreLookInput(true);
+		GetOwningPlayer()->SetInputMode(InputMode);
+		UpdateSlots();
+	}
+	else
+	{
+		GetOwningPlayer()->ClientIgnoreLookInput(false);
+		GetOwningPlayer()->SetInputMode(FInputModeGameOnly());
+	}
+}
+
 void UInventory::NativeDestruct()
 {
-	if(GetOwningPlayer())
-	{
-		GetOwningPlayer()->SetShowMouseCursor(false);
-	}
-
 	if(ContextWindow)
 	{
 		ContextWindow->RemoveFromParent();
@@ -120,10 +133,7 @@ void UInventory::OnInventorySlotClicked(UInventorySlot* ClickedSlot)
 	ShowContextWindow(ClickedSlot);
 }
 
-void UInventory::OnInventoryUpdated(int32 ChangedSlotIndex, FInventoryItem NewItem)
+void UInventory::OnInventoryUpdated(int32 ChangedSlotIndex, const FInventoryItem& NewItem)
 {
-	if(Slots.IsValidIndex(ChangedSlotIndex))
-	{
-		Slots[ChangedSlotIndex]->InitSlot(NewItem);
-	}
+	UpdateSlots();
 }
